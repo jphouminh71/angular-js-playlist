@@ -1,10 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE lang='en' html>
+<html lang="en" ng-app="myNinjaApp">
   <head>
-    <title>TheNetNinja Angular Playlist</title>
+    <title>AngularJS Tutorial</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="content/css/styles.css" rel="stylesheet" type="text/css" />
+    <script src="./app/lib/angular.min.js"></script>
+    <script src="./content/app.js"></script>
   </head>
   <body>
-
+    <div ng-controller="NinjaController" class="content">
+      <ng-include src="'./content/header.html'"> </ng-include>
+      <button ng-click="orderByName()">Order by Name</button>
+      <button ng-click="orderByBelt()">Order by Belt</button>
+      <input type="text" ng-model="search" placeholder="Search for a ninja" />
+      <ul>
+        <li
+          ng-repeat="ninja in ninjas | filter: search"
+          ng-show="ninja.available"
+        >
+          <img
+            ng-src="{{ninja.thumb}}"
+            style="
+              margin: -12px 10px 0 0;
+              float: left;
+              width: 50px;
+              border-radius: 100%;
+            "
+            alt=""
+          />
+          <div ng-click="removeNinja(ninja)" class="remove">x</div>
+          {{ninja.name}} - {{ninja.rate | currency}}
+          <span class="belt" style="background: {{ninja.belt}}"
+            >{{ninja.belt}}</span
+          >
+        </li>
+      </ul>
+      <!-- Angular will fire anything located in the ng-submit-->
+      <form ng-submit="addNinja()">
+        <input type="text" placeholder="name" ng-model="newNinja.name" />
+        <input type="text" placeholder="belt" ng-model="newNinja.belt" />
+        <input type="text" placeholder="rate" ng-model="newNinja.rate" />
+        <input type="submit" value="Add new ninja" />
+      </form>
+    </div>
   </body>
 </html>
